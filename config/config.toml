@@ -1,5 +1,2 @@
-[binance]
-    apiKey = ""
-    secretKey = ""
 [database]
     path = ""
