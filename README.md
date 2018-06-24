@@ -1,25 +1,25 @@
 # guard-trader
 Bot trader for exchanges operations
 
-                                                  +---------------+
-                                     +------------+    Account    |
-                                     v            |               |
-                                                  +---------------+
-                             +----------------+
-              +---+account+--+    Manager     +--------------+
-              |              |                |              |
-              |              +----+-----------+              |
-              |                   |           |              |
-         +----+-----+        +----+----+   +--+---+      +---+----+
-     +---+ binance1 |        | bitfinex|   |kraken|      |binance2+-----+
-     |   +-------+--+        +----+----+   +------+      +--------+     |
-     v           v                v                                     v
-+----+-----+  +--+--+        +----+-----+                        +------+---+
-|operation1|  | OP2 |        |operation1|                        |operation1|
-+----------+  +-----+        +----------+                        +----------+
+                                                    +---------------+
+                                        +------------+    Account    |
+                                        v            |               |
+                                                    +---------------+
+                                +----------------+
+                +---+account+--+    Manager     +--------------+
+                |              |                |              |
+                |              +----+-----------+              |
+                |                   |           |              |
+            +----+-----+        +----+----+   +--+---+      +---+----+
+        +---+ binance1 |        | bitfinex|   |kraken|      |binance2+-----+
+        |   +-------+--+        +----+----+   +------+      +--------+     |
+        v           v                v                                     v
+    +----+-----+  +--+--+        +----+-----+                        +------+---+
+    |operation1|  | OP2 |        |operation1|                        |operation1|
+    +----------+  +-----+        +----------+                        +----------+
 
 
-###Tasks list:
+### Tasks list:
 - [x] Flow architeture to support N exchanges acc lvl 1
 - [x] Code structure of project
 - [x] Exchange interface contract for manager
@@ -31,7 +31,7 @@ Bot trader for exchanges operations
 - [ ] Implement validations and errors
 
 
-###Backlog ideas to split in tasks:
+### Backlog ideas to split in tasks:
 - [ ] Operations: flow for generate analisys and orders
 - [ ] Operations: stop limit buy/sell
 - [ ] Cli commands
