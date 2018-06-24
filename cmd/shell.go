@@ -4,24 +4,22 @@ import (
 	"context"
 
 	"github.com/abiosoft/ishell"
-	"github.com/guard-trader/core"
+	m "github.com/guard-trader/manager"
 )
 
 var shell *ishell.Shell
 
 // Run the shell
-func Run(guard *core.Guard, cancel context.CancelFunc) {
+func Run(guard *m.Manager, cancel context.CancelFunc) {
 	shell = ishell.New()
-	//	monitoreInterrupt(node, cancel)
 	addCmd(shell, guard)
 	go shell.Run()
 }
 
-func addCmd(shell *ishell.Shell, guard *core.Guard) {
-	//state := node.StateMgr
+func addCmd(shell *ishell.Shell, guard *m.Manager) {
 	shell.AddCmd(&ishell.Cmd{
-		Name: "allorders",
-		Help: "Allorders get all orders.",
-		Func: getAllOrders(),
+		Name: "accs",
+		Help: "Get accounts",
+		Func: getAccounts(),
 	})
 }
