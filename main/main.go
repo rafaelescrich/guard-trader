@@ -4,17 +4,15 @@ import (
 	"fmt"
 
 	shell "github.com/guard-trader/cmd"
-	c "github.com/guard-trader/config"
-	"github.com/guard-trader/core"
+	mng "github.com/guard-trader/manager"
 )
 
 func main() {
 
-	guard, err := core.NewGuard(c.Config.Binance.ApiKey, c.Config.Binance.SecretKey)
+	manager, err := mng.NewManager()
 	if err != nil {
 		fmt.Println(err)
 	}
-	shell.Run(guard, cancel)
-	guard.WakeUp()
-
+	shell.Run(manager, cancel)
+	manager.WakeUp()
 }
