@@ -1,7 +1,8 @@
-package db
+package repository
 
 import (
 	"fmt"
+	"log"
 	"os"
 
 	"github.com/boltdb/bolt"
@@ -35,5 +36,39 @@ func NewBoltDB(subfolder string) *BoltDB {
 
 // Start start module test database
 func (db *BoltDB) Start() *BoltDB {
+	db.createManagerBucket()
+	db.createAccountBucket()
 	return db
+}
+
+func (db *BoltDB) createManagerBucket() error {
+	err := db.DB.Update(func(tx *bolt.Tx) error {
+		_, err := tx.CreateBucketIfNotExists([]byte(c.Config.Buckets.Manager))
+		if err != nil {
+			log.Println(err)
+			return err
+		}
+		return nil
+	})
+	if err != nil {
+		log.Println(err)
+		return err
+	}
+	return nil
+}
+
+func (db *BoltDB) createAccountBucket() error {
+	err := db.DB.Update(func(tx *bolt.Tx) error {
+		_, err := tx.CreateBucketIfNotExists([]byte(c.Config.Buckets.Account))
+		if err != nil {
+			log.Println(err)
+			return err
+		}
+		return nil
+	})
+	if err != nil {
+		log.Println(err)
+		return err
+	}
+	return nil
 }

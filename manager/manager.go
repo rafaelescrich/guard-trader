@@ -3,6 +3,7 @@ package manager
 import (
 	"fmt"
 
+	"github.com/boltdb/bolt"
 	acc "github.com/guard-trader/account"
 	exc "github.com/guard-trader/exchanges"
 )
@@ -11,6 +12,7 @@ import (
 type Manager struct {
 	accounts []acc.Account
 	clients  []exc.Exchange
+	db       *bolt.DB
 }
 
 // NewManager creates new manager
@@ -21,6 +23,8 @@ func NewManager() *Manager {
 
 // WakeUp and work
 func (m *Manager) WakeUp() {
+
+	m.NewClient("binance")
 	//TODO: init exchanges
 	// Get active orders from exchanges
 }

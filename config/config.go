@@ -16,6 +16,9 @@ type config struct {
 	Database struct {
 		Path string
 	}
+	Buckets struct {
+		Manager, Account string
+	}
 }
 
 // Config holds the configuration file(config.toml) contents

@@ -1,2 +1,6 @@
 [database]
     path = ""
+
+[buckets]
+    manager = "managerbucket"
+    account = "accountbucket"

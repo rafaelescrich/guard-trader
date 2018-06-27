@@ -9,6 +9,7 @@ const (
 
 // Account struct represents accounts of exchanges
 type Account struct {
+	ID           string
 	Name         string
 	ExchangeType ClientType
 	apiKey       string

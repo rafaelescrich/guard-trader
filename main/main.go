@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+	"context"
 
 	shell "github.com/guard-trader/cmd"
 	mng "github.com/guard-trader/manager"
@@ -9,10 +9,10 @@ import (
 
 func main() {
 
-	manager, err := mng.NewManager()
-	if err != nil {
-		fmt.Println(err)
-	}
+	manager := mng.NewManager()
+
+	_, cancel := context.WithCancel(context.Background())
+
 	shell.Run(manager, cancel)
 	manager.WakeUp()
 }
