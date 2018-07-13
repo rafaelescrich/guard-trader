@@ -1,17 +1,17 @@
-package manager
+package entities
 
 import (
 	"fmt"
 
+	"github.com/guard-trader/pairs"
+
 	"github.com/boltdb/bolt"
-	acc "github.com/guard-trader/account"
-	exc "github.com/guard-trader/exchanges"
 )
 
 // Manager of trades
 type Manager struct {
-	accounts []acc.Account
-	clients  []exc.Exchange
+	accounts []Account
+	clients  []Exchange
 	db       *bolt.DB
 }
 
@@ -25,8 +25,9 @@ func NewManager() *Manager {
 func (m *Manager) WakeUp() {
 
 	m.NewClient("binance")
-	//TODO: init exchanges
-	// Get active orders from exchanges
+
+	m.clients[0].CreateOrder(pairs.BTCUSD, "5.853,8", "0,0001")
+
 }
 
 // NewClient create new exchange
@@ -34,21 +35,21 @@ func (m *Manager) NewClient(accName string) {
 	account, _ := m.GetAcc(accName)
 
 	switch account.ExchangeType {
-	case acc.BINANCE:
-		binance := &exc.Binance{}
+	case BINANCE:
+		binance := &Binance{}
 		binance.CreateExchange(account)
 		m.clients = append(m.clients, binance)
 
-	case acc.BITFINEX:
-		bitfinex := &exc.Bitfinex{}
+	case BITFINEX:
+		bitfinex := &Bitfinex{}
 		bitfinex.CreateExchange(account)
 		m.clients = append(m.clients, bitfinex)
 	}
 }
 
 // GetExchangesByName search and returns exchanges by name
-func (m *Manager) GetExchangesByName(name string) []exc.Exchange {
-	exchanges := []exc.Exchange{}
+func (m *Manager) GetExchangesByName(name string) []Exchange {
+	exchanges := []Exchange{}
 	for _, exchange := range m.clients {
 		if exchange.GetName() == name {
 			exchanges = append(exchanges, exchange)
@@ -58,8 +59,8 @@ func (m *Manager) GetExchangesByName(name string) []exc.Exchange {
 }
 
 // GetExchangesByAcc search and returns exchanges by name
-func (m *Manager) GetExchangesByAcc(name string) []exc.Exchange {
-	exchanges := []exc.Exchange{}
+func (m *Manager) GetExchangesByAcc(name string) []Exchange {
+	exchanges := []Exchange{}
 	for _, exchange := range m.clients {
 		if exchange.GetName() == name {
 			exchanges = append(exchanges, exchange)
@@ -69,16 +70,16 @@ func (m *Manager) GetExchangesByAcc(name string) []exc.Exchange {
 }
 
 // GetAccounts get all accounts for a manager
-func (m *Manager) GetAccounts() []acc.Account {
+func (m *Manager) GetAccounts() []Account {
 	return m.accounts
 }
 
 // GetAcc search for account with same name
-func (m *Manager) GetAcc(accName string) (acc.Account, error) {
+func (m *Manager) GetAcc(accName string) (Account, error) {
 	for _, account := range m.accounts {
 		if account.Name == accName {
 			return account, nil
 		}
 	}
-	return acc.Account{}, fmt.Errorf("account not exists")
+	return Account{}, fmt.Errorf("account not exists")
 }

@@ -1,4 +1,4 @@
-package operation
+package entities
 
 import (
 	"time"
@@ -16,6 +16,7 @@ type Operation struct {
 	time           string
 }
 
+// GetSymbol symbol of the operation
 func (op *Operation) GetSymbol() string {
 	return op.symbol
 }

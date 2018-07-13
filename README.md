@@ -27,6 +27,7 @@ Bot trader for exchanges operations
 - [x] Accounts lvl 1
 - [x] Repository BoltDB lvl 1
 - [x] Operations struct lvl 1
+- [ ] Switch Boltdb for Badgedb
 - [ ] Tests for connections and req/resp
 - [ ] Implement validations and errors
 

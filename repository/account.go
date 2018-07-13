@@ -4,8 +4,8 @@ import (
 	"fmt"
 
 	"github.com/boltdb/bolt"
-	acc "github.com/guard-trader/account"
 	c "github.com/guard-trader/config"
+	acc "github.com/guard-trader/entities"
 	hlp "github.com/guard-trader/helpers"
 )
 

@@ -1,9 +1,7 @@
-package exchanges
+package entities
 
 import (
 	bitfinex "github.com/bitfinexcom/bitfinex-api-go/v2/rest"
-	acc "github.com/guard-trader/account"
-	op "github.com/guard-trader/operation"
 )
 
 // Bitfinex struct bot
@@ -11,14 +9,14 @@ type Bitfinex struct {
 	name    string
 	accName string
 	client  *bitfinex.Client
-	orders  []op.Operation
+	orders  []Operation
 }
 
 // CreateExchange create new client connection
-func (b *Bitfinex) CreateExchange(account acc.Account) {
+func (b *Bitfinex) CreateExchange(account Account) {
 	b.client = bitfinex.NewClient()
 	b.name = "bitfinex"
-	b.orders = []op.Operation{}
+	b.orders = []Operation{}
 }
 
 // GetClient returns client of api
@@ -34,8 +32,8 @@ func (b *Bitfinex) GetAccountName(accName string) string {
 	return b.accName
 }
 
-func (b *Bitfinex) GetOrdersBySymbol(symbol string) []op.Operation {
-	opr := []op.Operation{}
+func (b *Bitfinex) GetOrdersBySymbol(symbol string) []Operation {
+	opr := []Operation{}
 	return opr
 }
 
@@ -43,8 +41,8 @@ func (b *Bitfinex) CreateOrder(symbol, price, qtd string) {
 
 }
 
-func (b *Bitfinex) GetOrder(symbol string, orderID int64) op.Operation {
-	opr := op.Operation{}
+func (b *Bitfinex) GetOrder(symbol string, orderID int64) Operation {
+	opr := Operation{}
 	return opr
 }
 
@@ -52,8 +50,8 @@ func (b *Bitfinex) CancelOrder(symbol string, orderID int64) {
 
 }
 
-func (b *Bitfinex) ListOpenOrders(symbol string) []op.Operation {
-	opr := []op.Operation{}
+func (b *Bitfinex) ListOpenOrders(symbol string) []Operation {
+	opr := []Operation{}
 	return opr
 }
 

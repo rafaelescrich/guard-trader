@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"log"
 
-	acc "github.com/guard-trader/account"
+	ent "github.com/guard-trader/entities"
 	"github.com/ugorji/go/codec"
 )
 
@@ -19,7 +19,6 @@ func DeserializerString(d []byte) string {
 	if err := dec.Decode(&str); err != nil {
 		fmt.Printf("Error on Deserializer: %s\n", err)
 	}
-
 	return str
 }
 
@@ -33,7 +32,7 @@ func SerializerString(b string) []byte {
 }
 
 // SerializerAccount serialize acc
-func SerializerAccount(account acc.Account) []byte {
+func SerializerAccount(account ent.Account) []byte {
 	var result bytes.Buffer
 	enc := codec.NewEncoder(&result, &ch)
 	if err := enc.Encode(account); err != nil {
@@ -43,12 +42,11 @@ func SerializerAccount(account acc.Account) []byte {
 }
 
 // DeserializerAccount deselialize acc
-func DeserializerAccount(b []byte) acc.Account {
-	var a acc.Account
+func DeserializerAccount(b []byte) ent.Account {
+	var a ent.Account
 	dec := codec.NewDecoderBytes(b, &ch)
 	if err := dec.Decode(&a); err != nil {
 		log.Printf("error on deserialize acc : %s\n", err)
 	}
-
 	return a
 }

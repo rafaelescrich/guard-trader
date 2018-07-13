@@ -1,13 +1,10 @@
-package exchanges
+package entities
 
 import (
 	"context"
 	"fmt"
 
-	acc "github.com/guard-trader/account"
-
 	binance "github.com/adshao/go-binance"
-	op "github.com/guard-trader/operation"
 )
 
 // Binance struct bot
@@ -15,14 +12,14 @@ type Binance struct {
 	name    string
 	accName string
 	client  *binance.Client
-	orders  []op.Operation
+	orders  []Operation
 }
 
 // CreateExchange create new client connection
-func (b *Binance) CreateExchange(account acc.Account) {
+func (b *Binance) CreateExchange(account Account) {
 	b.client = binance.NewClient(account.GetApiKey(), account.GetSecretKey())
 	b.name = "binance"
-	b.orders = []op.Operation{}
+	b.orders = []Operation{}
 }
 
 func (b *Binance) GetName() string {
@@ -33,16 +30,16 @@ func (b *Binance) GetAccountName(accName string) string {
 	return b.accName
 }
 
-func (b *Binance) GetOrdersBySymbol(symbol string) []op.Operation {
+func (b *Binance) GetOrdersBySymbol(symbol string) []Operation {
 	orders, err := b.client.NewListOrdersService().Symbol(symbol).
 		Do(context.Background())
 	if err != nil {
 		fmt.Println(err)
-		return []op.Operation{}
+		return []Operation{}
 	}
 	fmt.Println(orders)
 	// TODO: operation <= order
-	opr := []op.Operation{}
+	opr := []Operation{}
 	return opr
 }
 
@@ -58,16 +55,16 @@ func (b *Binance) CreateOrder(symbol, price, qtd string) {
 	fmt.Println(order)
 }
 
-func (b *Binance) GetOrder(symbol string, orderID int64) op.Operation {
+func (b *Binance) GetOrder(symbol string, orderID int64) Operation {
 	order, err := b.client.NewGetOrderService().Symbol(symbol).
 		OrderID(orderID).Do(context.Background())
 	if err != nil {
 		fmt.Println(err)
-		return op.Operation{}
+		return Operation{}
 	}
 	fmt.Println(order)
 	// TODO: operation <= order
-	opr := op.Operation{}
+	opr := Operation{}
 	return opr
 }
 
@@ -80,18 +77,18 @@ func (b *Binance) CancelOrder(symbol string, orderID int64) {
 	}
 }
 
-func (b *Binance) ListOpenOrders(symbol string) []op.Operation {
+func (b *Binance) ListOpenOrders(symbol string) []Operation {
 	openOrders, err := b.client.NewListOpenOrdersService().Symbol(symbol).
 		Do(context.Background())
 	if err != nil {
 		fmt.Println(err)
-		return []op.Operation{}
+		return []Operation{}
 	}
 	for _, o := range openOrders {
 		fmt.Println(o)
 	}
 	// TODO: operation <= order
-	opr := []op.Operation{}
+	opr := []Operation{}
 	return opr
 }
 
