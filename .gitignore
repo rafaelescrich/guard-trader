@@ -1,2 +1,7 @@
+vendor/*
+!vendor/vendor.json
+
+dbs/*
+
 keys.toml
 debug

@@ -12,12 +12,16 @@ type Bitfinex struct {
 	orders  []Operation
 }
 
-// CreateExchange create new client connection
-func (b *Bitfinex) CreateExchange(account Account) {
+// AccessExchange create new client connection
+func (b *Bitfinex) AccessExchange(account Account) {
 	b.client = bitfinex.NewClient()
 	b.name = "bitfinex"
 	b.orders = []Operation{}
 }
+
+func (b *Bitfinex) TimeService()                      {}
+func (b *Bitfinex) GetNewHistoryTrades(symbol string) {}
+func (b *Bitfinex) GetInfoService()                   {}
 
 // GetClient returns client of api
 func (b *Bitfinex) GetClient() *bitfinex.Client {

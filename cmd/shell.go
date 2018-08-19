@@ -20,6 +20,18 @@ func addCmd(shell *ishell.Shell, guard *m.Manager) {
 	shell.AddCmd(&ishell.Cmd{
 		Name: "accs",
 		Help: "Get accounts",
-		Func: getAccounts(),
+		Func: getAccounts(guard),
+	})
+
+	shell.AddCmd(&ishell.Cmd{
+		Name: "register",
+		Help: "Register an account. 1-Name 2-ClientType",
+		Func: registerAcc(guard),
+	})
+
+	shell.AddCmd(&ishell.Cmd{
+		Name: "service",
+		Help: "Information of service of exchange.1-Exchange Name",
+		Func: infoService(guard),
 	})
 }

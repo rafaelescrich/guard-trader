@@ -2,7 +2,7 @@ package entities
 
 // Exchange client
 type Exchange interface {
-	CreateExchange(account Account)
+	AccessExchange(account Account)
 	GetName() string
 	GetAccountName(accName string) string
 	CreateOrder(symbol, price, qtd string)
@@ -14,4 +14,7 @@ type Exchange interface {
 	ListTickerPrices()
 	ListKlines(symbol, time string)
 	GetAccount()
+	TimeService()
+	GetNewHistoryTrades(symbol string)
+	GetInfoService()
 }

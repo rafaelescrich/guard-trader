@@ -15,21 +15,58 @@ type Binance struct {
 	orders  []Operation
 }
 
-// CreateExchange create new client connection
-func (b *Binance) CreateExchange(account Account) {
-	b.client = binance.NewClient(account.GetApiKey(), account.GetSecretKey())
+// AccessExchange create new client connection
+func (b *Binance) AccessExchange(account Account) {
+	b.client = binance.NewClient(account.GetAPIKey(), account.GetAPISecretKey())
 	b.name = "binance"
 	b.orders = []Operation{}
 }
 
+// GetName name
 func (b *Binance) GetName() string {
 	return b.name
 }
 
+// GetAccountName account name
 func (b *Binance) GetAccountName(accName string) string {
 	return b.accName
 }
 
+// TimeService get time from api server
+func (b *Binance) TimeService() {
+	serverTime, err := b.client.NewServerTimeService().Do(context.Background())
+	if err != nil {
+		fmt.Println("erro")
+		return
+	}
+	fmt.Println(serverTime)
+}
+
+// GetNewHistoryTrades history of trades
+func (b *Binance) GetNewHistoryTrades(symbol string) {
+	hist, err := b.client.NewHistoricalTradesService().Symbol(symbol).Do(context.Background())
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	for k, v := range hist {
+		fmt.Printf("%v %s\n", k, v.Quantity)
+	}
+}
+
+// GetInfoService info of pairs service
+func (b *Binance) GetInfoService() {
+	info, err := b.client.NewExchangeInfoService().Do(context.Background())
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	for k, v := range info.Symbols {
+		fmt.Printf("%v %s %s\n", k, v.Symbol, v.Status)
+	}
+}
+
+// GetOrdersBySymbol order by symbol
 func (b *Binance) GetOrdersBySymbol(symbol string) []Operation {
 	orders, err := b.client.NewListOrdersService().Symbol(symbol).
 		Do(context.Background())
@@ -37,12 +74,12 @@ func (b *Binance) GetOrdersBySymbol(symbol string) []Operation {
 		fmt.Println(err)
 		return []Operation{}
 	}
-	fmt.Println(orders)
-	// TODO: operation <= order
 	opr := []Operation{}
+	fmt.Println(orders[0].Price)
 	return opr
 }
 
+// CreateOrder new order
 func (b *Binance) CreateOrder(symbol, price, qtd string) {
 	order, err := b.client.NewCreateOrderService().Symbol(symbol).
 		Side(binance.SideTypeBuy).Type(binance.OrderTypeLimit).
@@ -55,6 +92,7 @@ func (b *Binance) CreateOrder(symbol, price, qtd string) {
 	fmt.Println(order)
 }
 
+// GetOrder opened order info
 func (b *Binance) GetOrder(symbol string, orderID int64) Operation {
 	order, err := b.client.NewGetOrderService().Symbol(symbol).
 		OrderID(orderID).Do(context.Background())
@@ -68,6 +106,7 @@ func (b *Binance) GetOrder(symbol string, orderID int64) Operation {
 	return opr
 }
 
+// CancelOrder cancel the order
 func (b *Binance) CancelOrder(symbol string, orderID int64) {
 	_, err := b.client.NewCancelOrderService().Symbol(symbol).
 		OrderID(orderID).Do(context.Background())
@@ -133,7 +172,8 @@ func (b *Binance) GetAccount() {
 		fmt.Println(err)
 		return
 	}
-	fmt.Println(res)
+	fmt.Println("result")
+	fmt.Println(res.CanDeposit)
 }
 
 /* func (b *Binance) GetOrdersBySymbol(symbol string) []op.Operation {

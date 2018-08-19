@@ -1,4 +1,4 @@
-package shared
+package helpers
 
 import (
 	"bytes"
@@ -12,15 +12,6 @@ import (
 var (
 	ch codec.CborHandle
 )
-
-func DeserializerString(d []byte) string {
-	var str string
-	dec := codec.NewDecoderBytes(d, &ch)
-	if err := dec.Decode(&str); err != nil {
-		fmt.Printf("Error on Deserializer: %s\n", err)
-	}
-	return str
-}
 
 func SerializerString(b string) []byte {
 	var result bytes.Buffer
@@ -39,14 +30,4 @@ func SerializerAccount(account ent.Account) []byte {
 		log.Printf("error on serialize acc: %s\n", err)
 	}
 	return result.Bytes()
-}
-
-// DeserializerAccount deselialize acc
-func DeserializerAccount(b []byte) ent.Account {
-	var a ent.Account
-	dec := codec.NewDecoderBytes(b, &ch)
-	if err := dec.Decode(&a); err != nil {
-		log.Printf("error on deserialize acc : %s\n", err)
-	}
-	return a
 }
